@@ -1,61 +1,43 @@
-let pet = null;
+let pet = '(=^･ω･^=)';
 let health = 100;
 let energy = 100;
 let cleanliness = 100;
 
-const pets = {
-  cat: [
-    `  /\_/\ 
-   \n ( o.o ) 
-   \n  > ^ <  `,
-    `  /\^/\ 
-    \n ( -.- ) \n
-        > ^ <  `,
-  ],
-  dog: [
-    `  /\\_/\\  \n
-       ( o.o ) \n 
-        (  )  `,
-    `  /\\_/\\  \n
-       ( ^.^ ) \n 
-        (  )  `,
-  ],
-};
-
-function setPet(type) {
-  pet = type;
-  showPet();
-}
-
 function showPet() {
-  const petElement = document.getElementById('pet');
-  petElement.innerHTML = pets[pet][Math.floor(Math.random() * pets[pet].length)];
+  document.getElementById('ascii-pet').textContent = pet;
   document.getElementById('health').textContent = health;
   document.getElementById('energy').textContent = energy;
   document.getElementById('cleanliness').textContent = cleanliness;
 }
 
 function feedPet() {
-  if (pet) {
-    health = Math.min(100, health + 10);
-    energy = Math.min(100, energy + 5);
-    cleanliness = Math.max(0, cleanliness - 5);
-    showPet();
-  }
+  health = Math.min(100, health + 10);
+  energy = Math.min(100, energy + 5);
+  cleanliness = Math.max(0, cleanliness - 5);
+  updateEmotion();
+  showPet();
 }
 
 function playWithPet() {
-  if (pet) {
-    energy = Math.max(0, energy - 10);
-    cleanliness = Math.max(0, cleanliness - 10);
-    showPet();
-  }
+  energy = Math.max(0, energy - 10);
+  cleanliness = Math.max(0, cleanliness - 10);
+  updateEmotion();
+  showPet();
 }
 
 function cleanPet() {
-  if (pet) {
-    cleanliness = Math.min(100, cleanliness + 20);
-    showPet();
+  cleanliness = Math.min(100, cleanliness + 20);
+  updateEmotion();
+  showPet();
+}
+
+function updateEmotion() {
+  if (health < 50 || energy < 50 || cleanliness < 50) {
+    pet = '(=･ｪ･=)';
+  } else if (health < 20 || energy < 20 || cleanliness < 20) {
+    pet = '(=ＴωＴ=)';
+  } else {
+    pet = '(=^･ω･^=)';
   }
 }
 
@@ -75,7 +57,6 @@ function sendChatMessage() {
   const message = document.createElement('p');
   message.textContent = input;
   chatBox.appendChild(message);
-  document.getElementById('chat-input').value = '';
 }
 
 function submitFeedback() {
@@ -84,21 +65,17 @@ function submitFeedback() {
   document.getElementById('feedback-input').value = '';
 }
 
-function adminLogin() {
-  const password = prompt('Wprowadź hasło administratora');
-  if (password === 'TFosAdMiN') {
-    document.getElementById('admin-panel').style.display = 'block';
-  } else {
-    alert('Błędne hasło!');
-  }
-}
-
-function authenticateAdmin() {
-  const password = document.getElementById('admin-password').value;
-  if (password === 'TFosAdMiN') {
+function accessAdmin() {
+  if (sessionStorage.getItem('isAdmin')) {
     document.getElementById('admin-tools').style.display = 'block';
   } else {
-    alert('Błędne hasło!');
+    const password = prompt('Wprowadź hasło administratora');
+    if (password === 'TFosAdMiN') {
+      sessionStorage.setItem('isAdmin', true);
+      document.getElementById('admin-tools').style.display = 'block';
+    } else {
+      alert('Błędne hasło!');
+    }
   }
 }
 
@@ -121,3 +98,11 @@ function decreaseEnergy() {
   energy = Math.max(0, energy - 10);
   showPet();
 }
+
+function playMiniGame() {
+  alert('Mini gra w budowie!');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showPet();
+});
