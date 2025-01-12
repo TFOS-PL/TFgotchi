@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Funkcja logowania
     const adminCode = prompt("Wprowadź kod administratora:");
-    if (adminCode === "HASLO_ADMINA_PLACEHOLDER") {
+    if (adminCode === "TFosAdMiN") {
         isAdmin = true;
         adminControls.style.display = "block"; // Wyświetlanie panelu admina
     }
