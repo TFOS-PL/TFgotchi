@@ -1,62 +1,115 @@
-// Statystyki zwierzaka
-let hunger = 50;
-let happiness = 50;
-let cleanliness = 50;
+let pet = null;
+let health = 100;
+let energy = 100;
+let cleanliness = 100;
 
-// Admin hasło
-const ADMIN_PASSWORD = "TFosAdMiN";
+const pets = {
+  cat: [
+    `  /\_/\  \n ( o.o ) \n  > ^ <  `,
+    `  /\^/\  \n ( -.- ) \n  > ^ <  `,
+  ],
+  dog: [
+    `  /\\_/\\  \n ( o.o ) \n  (  )  `,
+    `  /\\_/\\  \n ( ^.^ ) \n  (  )  `,
+  ],
+};
 
-// Wyświetlanie panelu administratora
-function openAdminPanel() {
-  document.getElementById("admin-panel").style.display = "block";
+function setPet(type) {
+  pet = type;
+  showPet();
 }
 
-// Ukrywanie panelu administratora
-function closeAdminPanel() {
-  document.getElementById("admin-panel").style.display = "none";
+function showPet() {
+  const petElement = document.getElementById('pet');
+  petElement.innerHTML = pets[pet][Math.floor(Math.random() * pets[pet].length)];
+  document.getElementById('health').textContent = health;
+  document.getElementById('energy').textContent = energy;
+  document.getElementById('cleanliness').textContent = cleanliness;
 }
 
-// Walidacja administratora
-function validateAdmin() {
-  const password = document.getElementById("admin-password").value;
-  if (password === ADMIN_PASSWORD) {
-    document.getElementById("admin-tools").style.display = "block";
-  } else {
-    alert("Nieprawidłowe hasło!");
+function feedPet() {
+  if (pet) {
+    health = Math.min(100, health + 10);
+    energy = Math.min(100, energy + 5);
+    cleanliness = Math.max(0, cleanliness - 5);
+    showPet();
   }
 }
 
-// Aktualizacja statystyk przez administratora
-function updateStatsAsAdmin() {
-  const newHunger = document.getElementById("admin-hunger").value;
-  const newHappiness = document.getElementById("admin-happiness").value;
-  const newCleanliness = document.getElementById("admin-cleanliness").value;
-
-  if (newHunger !== "") hunger = parseInt(newHunger);
-  if (newHappiness !== "") happiness = parseInt(newHappiness);
-  if (newCleanliness !== "") cleanliness = parseInt(newCleanliness);
-
-  document.getElementById("hunger").innerText = hunger;
-  document.getElementById("happiness").innerText = happiness;
-  document.getElementById("cleanliness").innerText = cleanliness;
-
-  alert("Zaktualizowano statystyki zwierzaka!");
+function playWithPet() {
+  if (pet) {
+    energy = Math.max(0, energy - 10);
+    cleanliness = Math.max(0, cleanliness - 10);
+    showPet();
+  }
 }
 
-// Nakarm zwierzę
-function feed() {
-  hunger = Math.min(hunger + 10, 100);
-  document.getElementById("hunger").innerText = hunger;
+function cleanPet() {
+  if (pet) {
+    cleanliness = Math.min(100, cleanliness + 20);
+    showPet();
+  }
 }
 
-// Pobaw się ze zwierzęciem
-function play() {
-  happiness = Math.min(happiness + 10, 100);
-  document.getElementById("happiness").innerText = happiness;
+function showSection(section) {
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(sec => sec.classList.remove('active'));
+  document.getElementById(`${section}-section`).classList.add('active');
 }
 
-// Sprzątnij po zwierzęciu
-function clean() {
-  cleanliness = Math.min(cleanliness + 10, 100);
-  document.getElementById("cleanliness").innerText = cleanliness;
+function toggleNightMode() {
+  document.body.classList.toggle('night-mode');
+}
+
+function sendChatMessage() {
+  const chatBox = document.getElementById('chat-box');
+  const input = document.getElementById('chat-input').value;
+  const message = document.createElement('p');
+  message.textContent = input;
+  chatBox.appendChild(message);
+  document.getElementById('chat-input').value = '';
+}
+
+function submitFeedback() {
+  const feedbackInput = document.getElementById('feedback-input').value;
+  alert(`Dziękujemy za opinię: "${feedbackInput}"`);
+  document.getElementById('feedback-input').value = '';
+}
+
+function adminLogin() {
+  const password = prompt('Wprowadź hasło administratora');
+  if (password === 'TFosAdMiN') {
+    document.getElementById('admin-panel').style.display = 'block';
+  } else {
+    alert('Błędne hasło!');
+  }
+}
+
+function authenticateAdmin() {
+  const password = document.getElementById('admin-password').value;
+  if (password === 'TFosAdMiN') {
+    document.getElementById('admin-tools').style.display = 'block';
+  } else {
+    alert('Błędne hasło!');
+  }
+}
+
+function increaseHealth() {
+  health = Math.min(100, health + 10);
+  showPet();
+}
+
+function decreaseHealth() {
+  health = Math.max(0, health - 10);
+  showPet();
+}
+
+function increaseEnergy() {
+  energy = Math.min(100, energy + 10);
+  showPet();
+}
+
+function decreaseEnergy() {
+  energy = Math.max(0, energy - 10);
+  showPet();
 }
