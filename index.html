@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFgotchi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Tamagotchi Game</h1>
+    <div>
+        <label for="gameCodeInput">Wpisz kod gry:</label>
+        <input type="text" id="gameCodeInput" placeholder="Wpisz kod">
+        <button onclick="loadGame()">Załaduj grę</button>
+    </div>
+    <div>
+        <button onclick="saveGame()">Zapisz grę</button>
+    </div>
+    <div>
+        <p>Wybrane zwierzę: <span id="chosen-animal">brak</span></p>
+        <p>Głód: <span id="hunger">0</span></p>
+        <p>Czystość: <span id="cleanliness">100</span></p>
+        <p>Punkty: <span id="points">0</span></p>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
