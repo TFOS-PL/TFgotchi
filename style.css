@@ -1,58 +1,48 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+}
+
+#navbar {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-#sponsored-link {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 14px;
-}
-
-#sponsored-link a {
-    text-decoration: none;
-    color: #4caf50;
-    font-weight: bold;
-}
-
-.screen {
-    display: none;
-    text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.screen.active {
-    display: block;
+    justify-content: space-around;
+    background-color: #4CAF50;
+    padding: 10px;
 }
 
 button {
     padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 5px;
     cursor: pointer;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #ddd;
 }
 
-#animal-display {
-    width: 100px;
+section {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+#messageInputSection input {
+    width: 80%;
+    padding: 5px;
+}
+
+#messageInputSection button {
+    width: 15%;
+}
+
+#opinionInput {
+    width: 100%;
+    padding: 10px;
     height: 100px;
-    margin: 20px auto;
-    background: url('animal-placeholder.png') no-repeat center;
-    background-size: cover;
+}
+
+#opinionList {
+    margin-bottom: 20px;
 }
