@@ -3,43 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TFgotchi</title>
+    <title>TFgotchi - Tamagotchi z czatem i opiniami</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Sponsorowany link -->
-    <div id="sponsored-link">
-        <a href="https://tfos.short.gy/start" target="_blank">Sponsorowane przez TFOS / Bambus OS 4.0</a>
-    </div>
 
-    <!-- Ekran logowania -->
-    <div id="login-screen" class="screen active">
-        <h1>TFgotchi</h1>
-        <p>Wpisz kod, aby kontynuować grę, lub wygeneruj nowy kod, aby zacząć nową grę.</p>
-        <input type="text" id="gameCodeInput" placeholder="Wpisz kod gry">
-        <button id="loadGameBtn">Załaduj grę</button>
-        <button id="newGameBtn">Nowa gra</button>
-    </div>
+    <header>
+        <div id="navbar">
+            <button id="chatTab">Czat</button>
+            <button id="gameTab">Gra Tamagotchi</button>
+            <button id="opinionTab">Opinie</button>
+        </div>
+    </header>
 
-    <!-- Ekran gry -->
-    <div id="game-screen" class="screen">
-        <h1>TFgotchi</h1>
-        <p>Wybrane zwierzę: <span id="chosen-animal">Brak</span></p>
-        <div id="animal-display"></div>
-        <p>Głód: <span id="hunger">50</span></p>
-        <p>Czystość: <span id="cleanliness">100</span></p>
-        <p>Punkty: <span id="points">0</span></p>
-        <button id="feedBtn">Nakarm</button>
-        <button id="cleanBtn">Posprzątaj</button>
-        <button id="playBtn">Pobaw się</button>
-        <button id="saveGameBtn">Zapisz grę</button>
-        <p id="gameCodeDisplay">Twój kod gry: <span id="generatedCode"></span></p>
-        <button id="logoutBtn">Wyloguj się</button>
-    </div>
+    <main>
+        <!-- Sekcja Czat -->
+        <section id="chatSection">
+            <h2>Czat TFgotchi</h2>
+            <div id="messagesContainer"></div>
+            <div id="messageInputSection">
+                <input type="text" id="messageInput" placeholder="Napisz wiadomość...">
+                <button id="sendMessageBtn">Wyślij</button>
+            </div>
+            <div id="adminControls" style="display:none;">
+                <h3>Panel Administracyjny Czat</h3>
+                <input type="text" id="adminMessage" placeholder="Ogłoszenie">
+                <button id="sendAdminMessageBtn">Wyślij ogłoszenie</button>
+                <input type="number" id="messageIdToDelete" placeholder="ID wiadomości">
+                <button id="deleteMessageBtn">Usuń wiadomość</button>
+            </div>
+        </section>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="firebase-config.js"></script>
+        <!-- Sekcja Gra Tamagotchi -->
+        <section id="gameSection" style="display:none;">
+            <h2>Gra Tamagotchi</h2>
+            <div id="tamagotchiStatus">
+                <p id="tamagotchiName">Kot: </p>
+                <p id="tamagotchiHealth">Zdrowie: 100</p>
+                <button id="feedBtn">Nakarm!</button>
+                <button id="playBtn">Zabawa!</button>
+                <button id="cleanBtn">Posprzątaj!</button>
+            </div>
+        </section>
+
+        <!-- Sekcja Opinie -->
+        <section id="opinionSection" style="display:none;">
+            <h2>Opinie o TFgotchi</h2>
+            <div id="opinionList"></div>
+            <textarea id="opinionInput" placeholder="Podziel się swoją opinią!"></textarea>
+            <button id="sendOpinionBtn">Wyślij opinię</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TFgotchi - Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
