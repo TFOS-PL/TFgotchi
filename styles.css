@@ -1,100 +1,44 @@
-/* Resetowanie */
-body, html {
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
+  background-color: #f5f5f5;
   color: #333;
 }
 
-/* Kontener */
-#container {
-  max-width: 400px;
-  margin: 20px auto;
-  border: 2px solid #ccc;
-  border-radius: 20px;
-  overflow: hidden;
-  background: linear-gradient(to bottom, #e8e8e8, #dcdcdc);
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Nagłówek */
-.header {
-  background: linear-gradient(to right, #4caf50, #8bc34a);
-  padding: 10px;
-  text-align: center;
+header {
+  background-color: #007acc;
   color: white;
-}
-
-.logo {
-  font-size: 24px;
-  margin: 0;
-}
-
-/* Pasek nawigacji */
-.navbar {
+  padding: 10px 20px;
   display: flex;
-  justify-content: space-around;
-  background: #f5f5f5;
-  padding: 10px 0;
-  border-bottom: 2px solid #ddd;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.nav-button {
-  background: #4caf50;
+nav button {
+  background-color: #005b99;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.nav-button:hover {
-  background: #388e3c;
-}
-
-/* Treść */
-.main-content {
   padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+nav button:hover {
+  background-color: #004080;
 }
 
 .section {
   display: none;
+  padding: 20px;
 }
 
 .section.active {
   display: block;
 }
 
-.screen {
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.stats, .actions {
-  text-align: center;
-}
-
-.actions button {
-  background: #4caf50;
-  color: white;
-  border: none;
-  margin: 5px;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.actions button:hover {
-  background: #388e3c;
-}
-
-/* Czat */
-.chat-box {
-  background: #e8e8e8;
+#chat-box {
   border: 1px solid #ccc;
   padding: 10px;
   height: 150px;
@@ -102,8 +46,12 @@ body, html {
   margin-bottom: 10px;
 }
 
-/* Tryb nocny */
 .night-mode {
-  background: #222;
+  background-color: #333;
   color: #f5f5f5;
+}
+
+#ascii-pet {
+  font-size: 20px;
+  text-align: center;
 }
