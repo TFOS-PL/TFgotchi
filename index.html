@@ -8,70 +8,65 @@
   <script src="app.js" defer></script>
 </head>
 <body>
-  <div id="container">
-    <header class="header">
-      <h1 class="logo">TFgotchi</h1>
-    </header>
-    <nav class="navbar">
-      <button onclick="showSection('game')" class="nav-button">Gra</button>
-      <button onclick="showSection('chat')" class="nav-button">Czat</button>
-      <button onclick="showSection('feedback')" class="nav-button">Opinie</button>
-      <button onclick="showSection('admin')" class="nav-button">Admin</button>
-      <button onclick="toggleNightMode()" class="nav-button">Tryb nocny</button>
+  <header>
+    <h1>TFgotchi</h1>
+    <nav>
+      <button onclick="showSection('game')">Gra</button>
+      <button onclick="showSection('chat')">Czat</button>
+      <button onclick="showSection('feedback')">Opinie</button>
+      <button onclick="showSection('admin')">Panel Administratora</button>
+      <button onclick="toggleNightMode()">Tryb nocny</button>
     </nav>
-    <main class="main-content">
-      <!-- Gra -->
-      <section id="game-section" class="section active">
-        <div class="screen">
-          <h2>Twoje zwierzątko</h2>
-          <pre id="ascii-pet">(=^･ω･^=)</pre>
-          <div class="stats">
-            <p>Zdrowie: <span id="health">100</span></p>
-            <p>Energia: <span id="energy">100</span></p>
-            <p>Czystość: <span id="cleanliness">100</span></p>
-          </div>
-          <div class="actions">
-            <button onclick="feedPet()">Nakarm</button>
-            <button onclick="playWithPet()">Pobaw się</button>
-            <button onclick="cleanPet()">Sprzątnij</button>
-          </div>
-        </div>
-      </section>
+  </header>
 
-      <!-- Czat -->
-      <section id="chat-section" class="section">
-        <div class="screen">
-          <h2>Czat</h2>
-          <div id="chat-box" class="chat-box"></div>
-          <input type="text" id="chat-input" placeholder="Napisz wiadomość">
-          <button onclick="sendChatMessage()">Wyślij</button>
-        </div>
-      </section>
+  <main>
+    <!-- Sekcja gry -->
+    <section id="game-section" class="section active">
+      <h2>Twoje zwierzątko</h2>
+      <pre id="ascii-pet">(=^･ω･^=)</pre>
+      <p>Zdrowie: <span id="health">100</span></p>
+      <p>Energia: <span id="energy">100</span></p>
+      <p>Czystość: <span id="cleanliness">100</span></p>
+      <button onclick="feedPet()">Nakarm</button>
+      <button onclick="playWithPet()">Pobaw się</button>
+      <button onclick="cleanPet()">Sprzątnij</button>
+    </section>
 
-      <!-- Opinie -->
-      <section id="feedback-section" class="section">
-        <div class="screen">
-          <h2>Opinie</h2>
-          <textarea id="feedback-input" placeholder="Twoja opinia..."></textarea>
-          <button onclick="submitFeedback()">Wyślij</button>
-        </div>
-      </section>
+    <!-- Sekcja czatu -->
+    <section id="chat-section" class="section">
+      <h2>Czat</h2>
+      <div id="chat-box"></div>
+      <input type="text" id="chat-input" placeholder="Napisz wiadomość">
+      <button onclick="sendChatMessage()">Wyślij</button>
+    </section>
 
-      <!-- Admin -->
-      <section id="admin-section" class="section">
-        <div class="screen">
-          <h2>Panel Administratora</h2>
-          <div id="admin-tools" style="display: none;">
-            <h3>Zarządzanie:</h3>
-            <button onclick="increaseHealth()">Zdrowie +</button>
-            <button onclick="decreaseHealth()">Zdrowie -</button>
-            <button onclick="increaseEnergy()">Energia +</button>
-            <button onclick="decreaseEnergy()">Energia -</button>
-            <button onclick="increaseCleanliness()">Czystość +</button>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+    <!-- Sekcja opinii -->
+    <section id="feedback-section" class="section">
+      <h2>Dodaj opinię</h2>
+      <textarea id="feedback-input" placeholder="Twoja opinia..."></textarea>
+      <button onclick="submitFeedback()">Wyślij opinię</button>
+    </section>
+
+    <!-- Sekcja panelu administratora -->
+    <section id="admin-section" class="section">
+      <h2>Panel Administratora</h2>
+      <div id="admin-tools" style="display: none;">
+        <h3>Zaawansowane zarządzanie</h3>
+        <p>
+          <button onclick="increaseHealth()">Zwiększ zdrowie</button>
+          <button onclick="decreaseHealth()">Zmniejsz zdrowie</button>
+        </p>
+        <p>
+          <button onclick="increaseEnergy()">Zwiększ energię</button>
+          <button onclick="decreaseEnergy()">Zmniejsz energię</button>
+        </p>
+        <p>
+          <button onclick="increaseCleanliness()">Zwiększ czystość</button>
+        </p>
+        <h3>Gry</h3>
+        <button onclick="playMiniGame()">Uruchom mini-grę</button>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
