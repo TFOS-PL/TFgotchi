@@ -1,117 +1,62 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Zmienne do przechowywania danych
-    const sendMessageBtn = document.getElementById("sendMessageBtn");
-    const sendAdminMessageBtn = document.getElementById("sendAdminMessageBtn");
-    const sendOpinionBtn = document.getElementById("sendOpinionBtn");
-    const messageInput = document.getElementById("messageInput");
-    const messagesContainer = document.getElementById("messagesContainer");
-    const opinionInput = document.getElementById("opinionInput");
-    const opinionList = document.getElementById("opinionList");
-    const gameSection = document.getElementById("gameSection");
-    const chatSection = document.getElementById("chatSection");
-    const opinionSection = document.getElementById("opinionSection");
-    const adminControls = document.getElementById("adminControls");
-    
-    const tamagotchiStatus = document.getElementById("tamagotchiStatus");
-    const feedBtn = document.getElementById("feedBtn");
-    const playBtn = document.getElementById("playBtn");
-    const cleanBtn = document.getElementById("cleanBtn");
+// Statystyki zwierzaka
+let hunger = 50;
+let happiness = 50;
+let cleanliness = 50;
 
-    let isAdmin = false;
-    let tamagotchiHealth = 100;
-    let messages = [];
-    let opinions = [];
+// Admin hasło
+const ADMIN_PASSWORD = "TFosAdMiN";
 
-    // Funkcje do wyświetlania
-    function displayMessages() {
-        messagesContainer.innerHTML = '';
-        messages.forEach((message, index) => {
-            const messageDiv = document.createElement('div');
-            messageDiv.innerHTML = `<strong>${message.user}</strong>: ${message.text}`;
-            messagesContainer.appendChild(messageDiv);
-        });
-    }
+// Wyświetlanie panelu administratora
+function openAdminPanel() {
+  document.getElementById("admin-panel").style.display = "block";
+}
 
-    function displayOpinions() {
-        opinionList.innerHTML = '';
-        opinions.forEach(opinion => {
-            const opinionDiv = document.createElement('div');
-            opinionDiv.innerHTML = `<p>${opinion}</p>`;
-            opinionList.appendChild(opinionDiv);
-        });
-    }
+// Ukrywanie panelu administratora
+function closeAdminPanel() {
+  document.getElementById("admin-panel").style.display = "none";
+}
 
-    // Funkcje czatu
-    sendMessageBtn.addEventListener("click", function() {
-        const messageText = messageInput.value;
-        if (messageText) {
-            messages.push({ user: "Użytkownik", text: messageText });
-            messageInput.value = '';
-            displayMessages();
-        }
-    });
+// Walidacja administratora
+function validateAdmin() {
+  const password = document.getElementById("admin-password").value;
+  if (password === ADMIN_PASSWORD) {
+    document.getElementById("admin-tools").style.display = "block";
+  } else {
+    alert("Nieprawidłowe hasło!");
+  }
+}
 
-    sendAdminMessageBtn.addEventListener("click", function() {
-        const adminMessageText = document.getElementById("adminMessage").value;
-        if (adminMessageText) {
-            messages.push({ user: "Administrator", text: adminMessageText });
-            document.getElementById("adminMessage").value = '';
-            displayMessages();
-        }
-    });
+// Aktualizacja statystyk przez administratora
+function updateStatsAsAdmin() {
+  const newHunger = document.getElementById("admin-hunger").value;
+  const newHappiness = document.getElementById("admin-happiness").value;
+  const newCleanliness = document.getElementById("admin-cleanliness").value;
 
-    // Funkcja dodawania opinii
-    sendOpinionBtn.addEventListener("click", function() {
-        const opinionText = opinionInput.value;
-        if (opinionText) {
-            opinions.push(opinionText);
-            opinionInput.value = '';
-            displayOpinions();
-        }
-    });
+  if (newHunger !== "") hunger = parseInt(newHunger);
+  if (newHappiness !== "") happiness = parseInt(newHappiness);
+  if (newCleanliness !== "") cleanliness = parseInt(newCleanliness);
 
-    // Funkcja gry Tamagotchi
-    feedBtn.addEventListener("click", function() {
-        tamagotchiHealth += 10;
-        if (tamagotchiHealth > 100) tamagotchiHealth = 100;
-        document.getElementById("tamagotchiHealth").innerText = `Zdrowie: ${tamagotchiHealth}`;
-    });
+  document.getElementById("hunger").innerText = hunger;
+  document.getElementById("happiness").innerText = happiness;
+  document.getElementById("cleanliness").innerText = cleanliness;
 
-    playBtn.addEventListener("click", function() {
-        tamagotchiHealth += 5;
-        if (tamagotchiHealth > 100) tamagotchiHealth = 100;
-        document.getElementById("tamagotchiHealth").innerText = `Zdrowie: ${tamagotchiHealth}`;
-    });
+  alert("Zaktualizowano statystyki zwierzaka!");
+}
 
-    cleanBtn.addEventListener("click", function() {
-        tamagotchiHealth -= 5;
-        if (tamagotchiHealth < 0) tamagotchiHealth = 0;
-        document.getElementById("tamagotchiHealth").innerText = `Zdrowie: ${tamagotchiHealth}`;
-    });
+// Nakarm zwierzę
+function feed() {
+  hunger = Math.min(hunger + 10, 100);
+  document.getElementById("hunger").innerText = hunger;
+}
 
-    // Funkcja logowania
-    const adminCode = prompt("Wprowadź kod administratora:");
-    if (adminCode === "TFosAdMiN") {
-        isAdmin = true;
-        adminControls.style.display = "block"; // Wyświetlanie panelu admina
-    }
+// Pobaw się ze zwierzęciem
+function play() {
+  happiness = Math.min(happiness + 10, 100);
+  document.getElementById("happiness").innerText = happiness;
+}
 
-    // Przełączanie zakładek
-    document.getElementById("chatTab").addEventListener("click", function() {
-        chatSection.style.display = "block";
-        gameSection.style.display = "none";
-        opinionSection.style.display = "none";
-    });
-
-    document.getElementById("gameTab").addEventListener("click", function() {
-        gameSection.style.display = "block";
-        chatSection.style.display = "none";
-        opinionSection.style.display = "none";
-    });
-
-    document.getElementById("opinionTab").addEventListener("click", function() {
-        opinionSection.style.display = "block";
-        chatSection.style.display = "none";
-        gameSection.style.display = "none";
-    });
-});
+// Sprzątnij po zwierzęciu
+function clean() {
+  cleanliness = Math.min(cleanliness + 10, 100);
+  document.getElementById("cleanliness").innerText = cleanliness;
+}
