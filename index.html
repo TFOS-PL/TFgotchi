@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamagotchi z Logowaniem</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eaeaea;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      width: 95%;
+      padding: 10px;
+      background: #4caf50;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .game-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .tamagotchi {
+      margin: 20px;
+      font-size: 2em;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-container">
+    <h1>Logowanie</h1>
+    <input type="text" id="username" placeholder="Nazwa użytkownika">
+    <input type="password" id="password" placeholder="Hasło">
+    <button onclick="login()">Zaloguj się</button>
+    <button onclick="register()">Zarejestruj się</button>
+    <p class="error" id="error"></p>
+  </div>
+
+  <div class="game-container" id="game-container">
+    <h1>Witaj w Tamagotchi!</h1>
+    <div class="tamagotchi">🐱 Twój zwierzak: Kotek</div>
+    <button onclick="playWithPet()">Pobaw się</button>
+    <button onclick="logout()">Wyloguj się</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    // Zmienna do przechowywania obecnego użytkownika
+    let currentUser = null;
+
+    // Funkcja rejestracji użytkownika
+    function register() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const error = document.getElementById('error');
+
+      if (!username || !password) {
+        error.textContent = 'Wypełnij wszystkie pola!';
+        return;
+      }
+
+      // Sprawdź, czy użytkownik już istnieje
+      const users = JSON.parse(localStorage.getItem('users')) || {};
+      if (users[username]) {
+        error.textContent = 'Użytkownik o tej nazwie już istnieje!';
+        return;
+      }
+
+      // Dodaj nowego użytkownika
+      users[username] = { password };
+      localStorage.setItem('users', JSON.stringify(users));
+      error.textContent = 'Rejestracja zakończona sukcesem! Możesz się teraz zalogować.';
+    }
+
+    // Funkcja logowania użytkownika
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const error = document.getElementById('error');
+
+      if (!username || !password) {
+        error.textContent = 'Wypełnij wszystkie pola!';
+        return;
+      }
+
+      // Pobierz użytkowników z LocalStorage
+      const users = JSON.parse(localStorage.getItem('users')) || {};
+
+      if (!users[username] || users[username].password !== password) {
+        error.textContent = 'Nieprawidłowa nazwa użytkownika lub hasło!';
+        return;
+      }
+
+      // Zaloguj użytkownika
+      currentUser = username;
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('game-container').style.display = 'flex';
+    }
+
+    // Funkcja wylogowania użytkownika
+    function logout() {
+      currentUser = null;
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'block';
+    }
+
+    // Funkcja interakcji z Tamagotchi
+    function playWithPet() {
+      const message = document.getElementById('message');
+      message.textContent = `${currentUser}, bawisz się ze swoim zwierzakiem! 🐾`;
+      setTimeout(() => (message.textContent = ''), 3000);
+    }
+  </script>
+</body>
+</html>
