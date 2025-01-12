@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,73 +10,65 @@
   <header>
     <h1>TFgotchi</h1>
     <nav>
-      <button onclick="switchTheme()">🌙 Tryb Nocny</button>
-      <button onclick="showSection('game')">Gra</button>
+      <button onclick="showSection('pet')">Zwierzak</button>
       <button onclick="showSection('chat')">Czat</button>
       <button onclick="showSection('feedback')">Opinie</button>
-      <button onclick="showSection('news')">Nowości</button>
+      <button onclick="toggleNightMode()">Tryb Nocny</button>
     </nav>
-    <div id="admin-access" onclick="openAdminPanel()">Dostęp administratora</div>
   </header>
+
   <main>
-    <section id="game" class="active">
-      <h2>Wybierz zwierzaka</h2>
-      <select id="pet-select" onchange="selectPet()">
-        <option value="cat">Kot</option>
-        <option value="dog">Pies</option>
-      </select>
-      <pre class="ascii-pet" id="ascii-pet">
- /\_/\  
-( o.o ) 
- > ^ <
-      </pre>
+    <section id="pet-section" class="section active">
+      <h2>Wybierz Zwierzę</h2>
+      <button onclick="setPet('cat')">Kot</button>
+      <button onclick="setPet('dog')">Pies</button>
+
+      <div class="ascii-pet" id="pet"></div>
+
       <div class="stats">
-        <p>Głód: <span id="hunger">50</span>/100</p>
-        <p>Szczęście: <span id="happiness">50</span>/100</p>
-        <p>Czystość: <span id="cleanliness">50</span>/100</p>
+        <p>Zdrowie: <span id="health">100</span>%</p>
+        <p>Energia: <span id="energy">100</span>%</p>
+        <p>Czystość: <span id="cleanliness">100</span>%</p>
       </div>
-      <button onclick="feed()">Nakarm</button>
-      <button onclick="play()">Pobaw się</button>
-      <button onclick="clean()">Sprzątnij</button>
+
+      <button onclick="feedPet()">Nakarm</button>
+      <button onclick="playWithPet()">Zabaw się</button>
+      <button onclick="cleanPet()">Sprzątnij</button>
     </section>
-    <section id="chat">
+
+    <section id="chat-section" class="section">
       <h2>Czat</h2>
       <div id="chat-box"></div>
-      <input type="text" id="chat-input" placeholder="Wpisz wiadomość">
-      <button onclick="sendMessage()">Wyślij</button>
+      <textarea id="chat-input" placeholder="Wpisz wiadomość"></textarea>
+      <button onclick="sendChatMessage()">Wyślij</button>
     </section>
-    <section id="feedback">
-      <h2>Dodaj opinię</h2>
-      <textarea id="feedback-input" placeholder="Podziel się swoją opinią"></textarea>
+
+    <section id="feedback-section" class="section">
+      <h2>Opinie</h2>
+      <textarea id="feedback-input" placeholder="Twoja opinia"></textarea>
       <button onclick="submitFeedback()">Wyślij opinię</button>
     </section>
-    <section id="news">
-      <h2>Nowości</h2>
-      <p>TFgotchi 1.0 - Wersja premierowa! Dodano nowe funkcje i interfejs.</p>
-    </section>
+
+    <div id="admin-access" onclick="adminLogin()">Dostęp Administratora</div>
   </main>
 
-  <!-- Panel administratora -->
+  <footer>
+    <p>&copy; 2025 TFgotchi | <a href="https://tfos.short.gy/start" target="_blank">Sponsorowane</a></p>
+  </footer>
+
   <div id="admin-panel">
     <h2>Panel Administratora</h2>
-    <label for="admin-password">Hasło:</label>
-    <input type="password" id="admin-password" placeholder="Wprowadź hasło">
-    <button onclick="validateAdmin()">Zaloguj</button>
+    <input type="password" id="admin-password" placeholder="Hasło Admina">
+    <button onclick="authenticateAdmin()">Zaloguj się</button>
+
     <div id="admin-tools" style="display: none;">
-      <h3>Ustawienia zwierzęcia</h3>
-      <label for="admin-hunger">Głód:</label>
-      <input type="number" id="admin-hunger" min="0" max="100">
-      <label for="admin-happiness">Szczęście:</label>
-      <input type="number" id="admin-happiness" min="0" max="100">
-      <label for="admin-cleanliness">Czystość:</label>
-      <input type="number" id="admin-cleanliness" min="0" max="100">
-      <button onclick="updateStatsAsAdmin()">Zapisz zmiany</button>
+      <button onclick="increaseHealth()">Zwiększ Zdrowie</button>
+      <button onclick="decreaseHealth()">Zmniejsz Zdrowie</button>
+      <button onclick="increaseEnergy()">Zwiększ Energię</button>
+      <button onclick="decreaseEnergy()">Zmniejsz Energię</button>
     </div>
-    <button onclick="closeAdminPanel()">Zamknij</button>
   </div>
-  <footer>
-    Sponsorowany link: <a href="https://tfos.short.gy/start" target="_blank">TF/Bambus OS 4.0</a>
-  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
