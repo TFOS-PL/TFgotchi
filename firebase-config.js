@@ -1,15 +1,20 @@
-// firebase-config.js
-// Your web app's Firebase configuration
+// Import Firebase functions
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+
+// Konfiguracja Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBeYY5ZYJiE8nkKqr874ZpMJo1BTtq3YZM",
-  authDomain: "tfgotchi.firebaseapp.com",
-  projectId: "tfgotchi",
-  storageBucket: "tfgotchi.firebasestorage.app",
-  messagingSenderId: "835432240305",
-  appId: "1:835432240305:web:9f01587a9749a45053be90",
-  measurementId: "G-XB1VWX1K55"
+    apiKey: "TWÓJ_API_KEY",
+    authDomain: "TWÓJ_AUTH_DOMAIN",
+    databaseURL: "TWÓJ_DATABASE_URL",
+    projectId: "TWÓJ_PROJECT_ID",
+    storageBucket: "TWÓJ_STORAGE_BUCKET",
+    messagingSenderId: "TWÓJ_MESSAGING_SENDER_ID",
+    appId: "TWÓJ_APP_ID"
 };
 
-// Initialize Firebase
+// Inicjalizacja Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const database = getDatabase(app);
+
+export { database };
