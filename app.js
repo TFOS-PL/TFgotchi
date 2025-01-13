@@ -1,108 +1,95 @@
-let pet = '(=^･ω･^=)';
-let health = 100;
-let energy = 100;
-let cleanliness = 100;
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBeYY5ZYJiE8nkKqr874ZpMJo1BTtq3YZM",
+  authDomain: "tfgotchi.firebaseapp.com",
+  projectId: "tfgotchi",
+  storageBucket: "tfgotchi.appspot.com",
+  messagingSenderId: "835432240305",
+  appId: "1:835432240305:web:9f01587a9749a45053be90",
+  measurementId: "G-XB1VWX1K55"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-function showPet() {
-  document.getElementById('ascii-pet').textContent = pet;
-  document.getElementById('health').textContent = health;
-  document.getElementById('energy').textContent = energy;
-  document.getElementById('cleanliness').textContent = cleanliness;
+// Zmienne dla zwierzaków
+let pet = null;
+let emotions = ['radość', 'smutek', 'gniew', 'spokój'];
+let currentEmotion = 0;
+
+// Funkcje dla gry
+function selectPet(type) {
+    if (type === 'cat') {
+        pet = "Kot";
+        document.getElementById('pet-area').innerHTML = '<pre>  /\_/\  \n ( o.o ) \n  > ^ <  </pre>';
+    } else if (type === 'dog') {
+        pet = "Pies";
+        document.getElementById('pet-area').innerHTML = '<pre> / \_/\\  \n( o.o ) \n > ^ < </pre>';
+    }
 }
 
 function feedPet() {
-  health = Math.min(100, health + 10);
-  energy = Math.min(100, energy + 5);
-  cleanliness = Math.max(0, cleanliness - 5);
-  updateEmotion();
-  showPet();
+    alert(pet + " został nakarmiony!");
 }
 
 function playWithPet() {
-  energy = Math.max(0, energy - 10);
-  cleanliness = Math.max(0, cleanliness - 10);
-  updateEmotion();
-  showPet();
+    alert(pet + " bawi się!");
 }
 
 function cleanPet() {
-  cleanliness = Math.min(100, cleanliness + 20);
-  updateEmotion();
-  showPet();
+    alert(pet + " posprzątał!");
 }
 
-function updateEmotion() {
-  if (health < 50 || energy < 50 || cleanliness < 50) {
-    pet = '(=･ｪ･=)';
-  } else if (health < 20 || energy < 20 || cleanliness < 20) {
-    pet = '(=ＴωＴ=)';
-  } else {
-    pet = '(=^･ω･^=)';
-  }
+function changePetEmotion() {
+    currentEmotion = (currentEmotion + 1) % emotions.length;
+    alert(pet + " ma teraz emocję: " + emotions[currentEmotion]);
 }
 
-function showSection(section) {
-  const sections = document.querySelectorAll('.section');
-  sections.forEach(sec => sec.classList.remove('active'));
-  document.getElementById(`${section}-section`).classList.add('active');
+// Funkcje administracyjne
+function openAdminPanel() {
+    document.getElementById('admin-panel').style.display = 'block';
 }
 
-function toggleNightMode() {
-  document.body.classList.toggle('night-mode');
-}
-
-function sendChatMessage() {
-  const chatBox = document.getElementById('chat-box');
-  const input = document.getElementById('chat-input').value;
-  const message = document.createElement('p');
-  message.textContent = input;
-  chatBox.appendChild(message);
-}
-
-function submitFeedback() {
-  const feedbackInput = document.getElementById('feedback-input').value;
-  alert(`Dziękujemy za opinię: "${feedbackInput}"`);
-  document.getElementById('feedback-input').value = '';
-}
-
-function accessAdmin() {
-  if (sessionStorage.getItem('isAdmin')) {
-    document.getElementById('admin-tools').style.display = 'block';
-  } else {
-    const password = prompt('Wprowadź hasło administratora');
-    if (password === 'TFosAdMiN') {
-      sessionStorage.setItem('isAdmin', true);
-      document.getElementById('admin-tools').style.display = 'block';
+function checkAdminPassword() {
+    const enteredPassword = document.getElementById('admin-password').value;
+    if (enteredPassword === "TFosAdMiN") {
+        document.getElementById('admin-actions').style.display = 'block';
     } else {
-      alert('Błędne hasło!');
+        alert("Niepoprawne hasło!");
     }
-  }
 }
 
-function increaseHealth() {
-  health = Math.min(100, health + 10);
-  showPet();
+function resetGameData() {
+    alert("Dane gry zostały zresetowane.");
 }
 
-function decreaseHealth() {
-  health = Math.max(0, health - 10);
-  showPet();
+function viewStatistics() {
+    alert("Zobacz statystyki użytkowników");
 }
 
-function increaseEnergy() {
-  energy = Math.min(100, energy + 10);
-  showPet();
+// Czat
+function sendMessage() {
+    const message = document.getElementById('message-input').value;
+    if (message) {
+        const messageContainer = document.createElement('div');
+        messageContainer.textContent = message;
+        document.getElementById('messages').appendChild(messageContainer);
+
+        // Zapisywanie wiadomości do Firebase
+        db.collection('messages').add({
+            message: message,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        document.getElementById('message-input').value = ''; // Clear input
+    }
 }
 
-function decreaseEnergy() {
-  energy = Math.max(0, energy - 10);
-  showPet();
-}
-
-function playMiniGame() {
-  alert('Mini gra w budowie!');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  showPet();
+// Pobieranie wiadomości z Firebase
+db.collection('messages').orderBy('timestamp', 'asc').onSnapshot((querySnapshot) => {
+    document.getElementById('messages').innerHTML = ''; // Clear existing messages
+    querySnapshot.forEach(doc => {
+        const messageContainer = document.createElement('div');
+        messageContainer.textContent = doc.data().message;
+        document.getElementById('messages').appendChild(messageContainer);
+    });
 });
