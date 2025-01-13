@@ -1,72 +1,55 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TFgotchi</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFgotchi - Gra</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>TFgotchi</h1>
-    <nav>
-      <button onclick="showSection('game')">Gra</button>
-      <button onclick="showSection('chat')">Czat</button>
-      <button onclick="showSection('feedback')">Opinie</button>
-      <button onclick="showSection('admin')">Panel Administratora</button>
-      <button onclick="toggleNightMode()">Tryb nocny</button>
-    </nav>
-  </header>
+    <header>
+        <div class="navbar">
+            <h1>TFgotchi</h1>
+            <div class="menu">
+                <button id="toggle-darkmode">Tryb Nocny</button>
+                <button id="admin-access" onclick="openAdminPanel()">Dostęp Administratora</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="game-container">
+            <h2>Wybierz swojego zwierzaka:</h2>
+            <button onclick="selectPet('cat')">Kot</button>
+            <button onclick="selectPet('dog')">Pies</button>
 
-  <main>
-    <!-- Sekcja gry -->
-    <section id="game-section" class="section active">
-      <h2>Twoje zwierzątko</h2>
-      <pre id="ascii-pet">(=^･ω･^=)</pre>
-      <p>Zdrowie: <span id="health">100</span></p>
-      <p>Energia: <span id="energy">100</span></p>
-      <p>Czystość: <span id="cleanliness">100</span></p>
-      <button onclick="feedPet()">Nakarm</button>
-      <button onclick="playWithPet()">Pobaw się</button>
-      <button onclick="cleanPet()">Sprzątnij</button>
-    </section>
+            <div id="pet-area">
+                <!-- Zwierzak ASCII pojawi się tutaj -->
+            </div>
+            <button onclick="feedPet()">Nakarm</button>
+            <button onclick="playWithPet()">Baw się</button>
+            <button onclick="cleanPet()">Sprzątaj</button>
+            <button onclick="changePetEmotion()">Zmień emocję</button>
+        </div>
 
-    <!-- Sekcja czatu -->
-    <section id="chat-section" class="section">
-      <h2>Czat</h2>
-      <div id="chat-box"></div>
-      <input type="text" id="chat-input" placeholder="Napisz wiadomość">
-      <button onclick="sendChatMessage()">Wyślij</button>
-    </section>
+        <div id="chat-box">
+            <h3>Czat</h3>
+            <div id="messages"></div>
+            <textarea id="message-input" placeholder="Napisz wiadomość..."></textarea>
+            <button onclick="sendMessage()">Wyślij</button>
+        </div>
 
-    <!-- Sekcja opinii -->
-    <section id="feedback-section" class="section">
-      <h2>Dodaj opinię</h2>
-      <textarea id="feedback-input" placeholder="Twoja opinia..."></textarea>
-      <button onclick="submitFeedback()">Wyślij opinię</button>
-    </section>
-
-    <!-- Sekcja panelu administratora -->
-    <section id="admin-section" class="section">
-      <h2>Panel Administratora</h2>
-      <div id="admin-tools" style="display: none;">
-        <h3>Zaawansowane zarządzanie</h3>
-        <p>
-          <button onclick="increaseHealth()">Zwiększ zdrowie</button>
-          <button onclick="decreaseHealth()">Zmniejsz zdrowie</button>
-        </p>
-        <p>
-          <button onclick="increaseEnergy()">Zwiększ energię</button>
-          <button onclick="decreaseEnergy()">Zmniejsz energię</button>
-        </p>
-        <p>
-          <button onclick="increaseCleanliness()">Zwiększ czystość</button>
-        </p>
-        <h3>Gry</h3>
-        <button onclick="playMiniGame()">Uruchom mini-grę</button>
-      </div>
-    </section>
-  </main>
+        <div id="admin-panel" style="display:none;">
+            <h2>Panel Administratora</h2>
+            <input type="password" id="admin-password" placeholder="Wpisz hasło">
+            <button onclick="checkAdminPassword()">Zaloguj się</button>
+            <div id="admin-actions" style="display:none;">
+                <button onclick="resetGameData()">Resetuj dane gry</button>
+                <button onclick="viewStatistics()">Zobacz statystyki</button>
+            </div>
+        </div>
+    </main>
+    
+    <script src="app.js"></script>
+    <script src="firebase-config.js"></script>
 </body>
 </html>
